@@ -1,5 +1,5 @@
 import React from "react";
-
+import MessageForm from "../../components/MessageBoard/MessageForm";
 interface NewMessageProps {}
 interface NewMessageState {}
 
@@ -8,6 +8,7 @@ class NewMessage extends React.Component<NewMessageProps, NewMessageState> {
     return (
       <div>
         <h2>New Secret Message</h2>
+        <MessageForm />
       </div>
     );
   }
