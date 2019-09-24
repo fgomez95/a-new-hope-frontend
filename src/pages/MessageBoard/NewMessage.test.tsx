@@ -4,14 +4,20 @@ import "../../test/setup";
 import { BrowserRouter as Router } from "react-router-dom";
 import { mount } from "enzyme";
 import MessageForm from "../../components/MessageBoard/MessageForm";
-
-const wrapper = mount(
-  <Router>
-    <NewMessage />
-  </Router>
-);
+import { NewMessageState } from "./NewMessage";
 
 describe("NewMessageBoard", () => {
+  let wrapper: any;
+  beforeEach(() => {
+    wrapper = mount(
+      <Router>
+        <NewMessage />
+      </Router>
+    );
+  });
+  afterEach(() => {
+    wrapper.unmount();
+  });
   it("renders without crashing", () => {
     expect(wrapper.find(NewMessage)).toHaveLength(1);
   });
@@ -41,5 +47,11 @@ describe("NewMessageBoard", () => {
       }
     });
     expect(newMessage.state().message).toEqual(messageExample);
+  });
+  it("should reset the wrapper values before each test", () => {
+    const newMessageState: NewMessageState = wrapper.find(NewMessage).state();
+    const { username, message } = newMessageState;
+    expect(username).toEqual("");
+    expect(message).toEqual("");
   });
 });

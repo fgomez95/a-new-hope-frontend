@@ -1,7 +1,8 @@
 import React from "react";
 import MessageForm from "../../components/MessageBoard/MessageForm";
-interface NewMessageProps {}
-interface NewMessageState {
+
+export interface NewMessageProps {}
+export interface NewMessageState {
   username: string;
   message: string;
 }
