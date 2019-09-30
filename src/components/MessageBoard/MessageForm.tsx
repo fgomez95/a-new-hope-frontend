@@ -1,10 +1,5 @@
 import React from "react";
-
-interface MessageFormProps {
-  handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
-  username: string;
-  message: string;
-}
+import { MessageFormProps } from "./MessageBoardTypes";
 
 const messageForm = (props: MessageFormProps) => (
   <form>

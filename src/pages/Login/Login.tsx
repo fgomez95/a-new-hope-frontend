@@ -1,14 +1,6 @@
 import * as React from "react";
 import LoginForm from "../../components/Login/LoginForm";
-
-interface LoginState {
-  username: string;
-  password: string;
-}
-
-interface LoginProps {
-  asyncLogin: any;
-}
+import { LoginProps, LoginState } from "./LoginTypes";
 
 class Login extends React.Component<LoginProps, LoginState> {
   state: LoginState = {
@@ -21,7 +13,9 @@ class Login extends React.Component<LoginProps, LoginState> {
       [name]: value
     } as Pick<LoginState, keyof LoginState>);
   };
-  handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  handleFormSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
     this.props.asyncLogin(this.state.username, this.state.password);
   };

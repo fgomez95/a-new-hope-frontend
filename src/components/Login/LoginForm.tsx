@@ -1,12 +1,7 @@
 import * as React from "react";
+import { LoginFormProps } from "./LoginTypes";
 
-export interface ILoginFormProps {
-  username: string;
-  password: string;
-  handleInputChange(event: React.ChangeEvent<HTMLInputElement>): void;
-  handleFormSubmit(event: React.FormEvent<HTMLFormElement>): void;
-}
-function Login(props: ILoginFormProps): JSX.Element {
+function LoginForm(props: LoginFormProps): JSX.Element {
   return (
     <div>
       <form onSubmit={props.handleFormSubmit}>
@@ -24,13 +19,10 @@ function Login(props: ILoginFormProps): JSX.Element {
           value={props.password}
           onChange={props.handleInputChange}
         />
-        <input 
-          type="submit"
-          className="form-submit"
-        />
+        <input type="submit" className="form-submit" />
       </form>
     </div>
   );
 }
 
-export default Login;
+export default LoginForm;

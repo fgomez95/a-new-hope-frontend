@@ -1,15 +1,10 @@
 import * as React from "react";
+import Main from "./pages/Main";
 import { connect } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
-import { AppState } from "./store";
-import Main from "./pages/Main";
 import { thunkLogin } from "./store/session/thunks";
-import { Session } from "./store/session/types";
-
-interface AppProps {
-  thunkLogin: any;
-  session: Session;
-}
+import { AppProps } from "./AppTypes";
+import { AppState } from "./store";
 
 class App extends React.Component<AppProps> {
   render() {

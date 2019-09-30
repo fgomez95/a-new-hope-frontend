@@ -1,13 +1,28 @@
 import React from "react";
 import NewMessage from "./NewMessage";
+import MessageForm from "../../components/MessageBoard/MessageForm";
 import "../../test/setup";
 import { BrowserRouter as Router } from "react-router-dom";
-import { mount } from "enzyme";
-import MessageForm from "../../components/MessageBoard/MessageForm";
-import { NewMessageState } from "./NewMessage";
+import { mount, ReactWrapper } from "enzyme";
+import { NewMessageState } from "./MessageBoardTypes";
+import { Event } from "../../modules/shared_interfaces";
+
+const usernameEvent: Event = {
+  target: {
+    value: "jdoe@mail.com",
+    name: "username"
+  }
+};
+
+const messageEvent: Event = {
+  target: {
+    value: "hello, world",
+    name: "message"
+  }
+};
 
 describe("NewMessageBoard", () => {
-  let wrapper: any;
+  let wrapper: ReactWrapper;
   beforeEach(() => {
     wrapper = mount(
       <Router>
@@ -25,32 +40,29 @@ describe("NewMessageBoard", () => {
     expect(wrapper.find(MessageForm)).toHaveLength(1);
   });
   it("should update the username state when the username input changes", () => {
-    const usernameInput = wrapper.find("#username");
-    const newMessage = wrapper.find(NewMessage);
-    const usernameExample = "example123";
-    usernameInput.simulate("change", {
-      target: {
-        value: usernameExample,
-        name: "username"
-      }
-    });
-    expect(newMessage.state().username).toEqual(usernameExample);
+    const usernameInput: ReactWrapper = wrapper.find("#username");
+    const newMessage: ReactWrapper<{}, NewMessageState> = wrapper.find(
+      NewMessage
+    );
+    const testResult: string = usernameEvent.target.value;
+    usernameInput.simulate("change", usernameEvent);
+    expect(newMessage.state().username).toEqual(testResult);
   });
   it("should update the message state when the message input changes", () => {
-    const messageInput = wrapper.find("#message");
-    const newMessage = wrapper.find(NewMessage);
-    const messageExample = "hello, world";
-    messageInput.simulate("change", {
-      target: {
-        value: messageExample,
-        name: "message"
-      }
-    });
-    expect(newMessage.state().message).toEqual(messageExample);
+    const messageInput: ReactWrapper = wrapper.find("#message");
+    const newMessage: ReactWrapper<{}, NewMessageState> = wrapper.find(
+      NewMessage
+    );
+    const testResult: string = messageEvent.target.value;
+    messageInput.simulate("change", messageEvent);
+    expect(newMessage.state().message).toEqual(testResult);
   });
   it("should reset the wrapper values before each test", () => {
     const newMessageState: NewMessageState = wrapper.find(NewMessage).state();
-    const { username, message } = newMessageState;
+    const {
+      username,
+      message
+    }: { username: string; message: string } = newMessageState;
     expect(username).toEqual("");
     expect(message).toEqual("");
   });

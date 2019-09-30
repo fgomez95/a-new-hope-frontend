@@ -1,19 +1,27 @@
 import * as React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { mount } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
 import Login from "./Login";
 import "../../test/setup";
+import { Event } from "../../modules/shared_interfaces";
 
-interface Event {
+const usernameEvent: Event = {
   target: {
-    name: string;
-    value: string;
-  };
-}
+    name: "username",
+    value: "john"
+  }
+};
 
-function mockAsyncLogin() {}
+const passwordEvent: Event = {
+  target: {
+    name: "password",
+    value: "secret"
+  }
+};
 
-const wrapper = mount(
+const mockAsyncLogin = jest.fn();
+
+const wrapper: ReactWrapper = mount(
   <Router>
     <Login asyncLogin={mockAsyncLogin} />
   </Router>
@@ -24,25 +32,20 @@ describe("Login", () => {
     expect(wrapper.find(Login)).toHaveLength(1);
   });
   it("sould update the username state on input change", () => {
-    const event: Event = {
-      target: {
-        name: "username",
-        value: "john"
-      }
-    };
-    const input = wrapper.find(".form-username");
-    input.simulate("change", event);
-    expect(wrapper.find(Login).state().username).toEqual("john");
+    const input: ReactWrapper = wrapper.find(".form-username");
+    const testResult: string = usernameEvent.target.value;
+    input.simulate("change", usernameEvent);
+    expect(wrapper.find(Login).state().username).toEqual(testResult);
   });
   it("should update the password state on input change", () => {
-    const event: Event = {
-      target: {
-        name: "password",
-        value: "secret"
-      }
-    };
-    const input = wrapper.find(".form-password");
-    input.simulate("change", event);
-    expect(wrapper.find(Login).state().password).toEqual("secret");
+    const input: ReactWrapper = wrapper.find(".form-password");
+    const testResult: string = passwordEvent.target.value;
+    input.simulate("change", passwordEvent);
+    expect(wrapper.find(Login).state().password).toEqual(testResult);
+  });
+  it("should call async login on form submit", () => {
+    const input: ReactWrapper = wrapper.find("form");
+    input.simulate("submit");
+    expect(mockAsyncLogin.mock.calls).toHaveLength(1);
   });
 });

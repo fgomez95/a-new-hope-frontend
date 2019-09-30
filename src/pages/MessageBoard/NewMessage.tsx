@@ -1,11 +1,6 @@
 import React from "react";
 import MessageForm from "../../components/MessageBoard/MessageForm";
-
-export interface NewMessageProps {}
-export interface NewMessageState {
-  username: string;
-  message: string;
-}
+import { NewMessageState, NewMessageProps } from "./MessageBoardTypes";
 
 class NewMessage extends React.Component<NewMessageProps, NewMessageState> {
   state: NewMessageState = {
